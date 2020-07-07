@@ -4,21 +4,24 @@ import {
   Route,
   Switch,
   Link,
-  Redirect,
-  useHistory,
-  useLocation
 } from 'react-router-dom';
 
+import Welcome from './components/welcome/Welcome';
 import Login from './components/authentication/login/Login';
 import Registration from './components/authentication/registration/registration';
 import Dashboard from './components/dashboard/Dashboard';
+import Menubar from './components/menubar/Menubar';
 import PrivateRoute from './hooks/useAuth';
 
 function App() {
   return (
     <div className="min-h-screen bg-green-500">
       <Router>
+
+      <Menubar>
+
         
+
         <Switch>
             <Route path="/login">
               <Login />
@@ -30,10 +33,10 @@ function App() {
               <Dashboard />
             </PrivateRoute>
             <Route path="/" exact>
-              
+              <Welcome/>
             </Route>
         </Switch>
-
+        </Menubar>
       </Router>     
     </div>
     

@@ -1,0 +1,41 @@
+.menubar{
+    background: linear-gradient(to left, transparent, rgb(7, 27, 4));
+    color: white;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    border-radius: 10px;
+    transform: translateX(-55%);
+    transition: 0.5s all ease-in-out;
+    box-shadow: 2px 10px 23px #000;
+    opacity: 0.5;
+}
+
+.menubar:hover{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.menubar > div{
+    padding: 10px;
+}
+
+.menubar > div > h1{
+    display: inline;
+    margin-right: 5px;
+}
+
+.menu a{
+    transition: 0.5s all ease-in-out;
+    border-radius: 10px;
+}
+
+.menu a:active,
+.menu a:hover{
+    background: black;
+}
+
+.menu-item:hover{
+    background: transparent;
+}
