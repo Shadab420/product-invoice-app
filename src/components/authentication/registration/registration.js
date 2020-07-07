@@ -29,6 +29,10 @@ const validate = values => {
         errors.password = 'Required';
     }
 
+    if(!values.confirmPassword){
+        errors.confirmPassword = 'Required';
+    }
+
     if (!values.country) {
         errors.country = 'Required';
     } 
@@ -54,9 +58,10 @@ function Registration() {
             lastname: '',
             email: '',
             password: '',
+            confirmPassword: '',
             country: '',
             address: '',
-            // photo: ''
+            photo: ''
         },
         validate,
         onSubmit: values => {
@@ -66,37 +71,40 @@ function Registration() {
 
     return (
         <>
-            <div className="w-full max-w-xs mx-auto py-20">
+            <div className="w-full max-w-lg mx-auto py-20">
                 
                 <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" enctype="multipart/form-data" onSubmit={formik.handleSubmit}>
                     <h2 className="text-center font-bold mb-4">Registration</h2>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="firstname">
-                        Firstname
-                        </label>
-                        <input 
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            id="firstname" 
-                            type="text" 
-                            placeholder="Firstname"
-                            onChange={formik.handleChange}
-                            value={formik.values.firstname}
-                        />
-                        {formik.errors.firstName ?<p className="text-red-500 text-xs italic">Please enter your firstname!</p> : null }
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="lastname">
-                        Lastname
-                        </label>
-                        <input 
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            id="lastname" 
-                            type="text" 
-                            placeholder="Lastname"
-                            onChange={formik.handleChange}
-                            value={formik.values.lastname}
-                        />
-                        {formik.errors.firstName ?<p className="text-red-500 text-xs italic">Please enter your lastname!</p> : null }
+                    <div className="flex justify-between">
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" for="firstname">
+                            Firstname
+                            </label>
+                            <input 
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                id="firstname" 
+                                type="text" 
+                                placeholder="Firstname"
+                                onChange={formik.handleChange}
+                                value={formik.values.firstname}
+                            />
+                            {formik.errors.firstname ?<p className="text-red-500 text-xs italic">Please enter your firstname!</p> : null }
+                        </div>
+                        
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" for="lastname">
+                            Lastname
+                            </label>
+                            <input 
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                id="lastname" 
+                                type="text" 
+                                placeholder="Lastname"
+                                onChange={formik.handleChange}
+                                value={formik.values.lastname}
+                            />
+                            {formik.errors.lastname ?<p className="text-red-500 text-xs italic">Please enter your lastname!</p> : null }
+                        </div>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" for="email">
@@ -112,46 +120,66 @@ function Registration() {
                         />
                         {formik.errors.email ?<p className="text-red-500 text-xs italic">Please enter a valid email!</p> : null }
                     </div>
-                    <div className="mb-6">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
-                        Password
-                        </label>
-                        <input 
-                            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
-                            id="password" 
-                            type="password" 
-                            placeholder="******************"
-                            onChange={formik.handleChange}
-                            value={formik.values.password}
-                        />
-                        {formik.errors.password ?<p className="text-red-500 text-xs italic">Password is required!</p> : null }
+
+                    <div className="flex justify-between">
+                        <div className="mb-6">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
+                            Password
+                            </label>
+                            <input 
+                                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
+                                id="password" 
+                                type="password" 
+                                placeholder="******************"
+                                onChange={formik.handleChange}
+                                value={formik.values.password}
+                            />
+                            {formik.errors.password ?<p className="text-red-500 text-xs italic">Password is required!</p> : null }
+                        </div>
+                        <div className="mb-6">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" for="confirmPassword">
+                                Confirm Password
+                            </label>
+                            <input 
+                                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`}
+                                id="confirmPassword" 
+                                type="password" 
+                                placeholder="******************"
+                                onChange={formik.handleChange}
+                                value={formik.values.confirmPassword}
+                            />
+                            {formik.errors.confirmPassword ?<p className="text-red-500 text-xs italic">Confirm password is required!</p> : null }
+                        </div>
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="country">
-                            Country
-                        </label>
-                        <input 
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            id="country" 
-                            type="text" 
-                            placeholder="Country"
-                            onChange={formik.handleChange}
-                            value={formik.values.country}
-                        />
-                        {formik.errors.country ?<p className="text-red-500 text-xs italic">Please select your country!</p> : null }
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="address">
-                            Address
-                        </label>
-                        <textarea 
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                            id="address" 
-                            placeholder="Address"
-                            onChange={formik.handleChange}
-                            value={formik.values.address}
-                        ></textarea>
-                        {formik.errors.address ?<p className="text-red-500 text-xs italic">Please enter your address!</p> : null }
+                    
+                    <div className="flex justify-between">
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" for="country">
+                                Country
+                            </label>
+                            <input 
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                id="country" 
+                                type="text" 
+                                placeholder="Country"
+                                onChange={formik.handleChange}
+                                value={formik.values.country}
+                            />
+                            {formik.errors.country ?<p className="text-red-500 text-xs italic">Please select your country!</p> : null }
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" for="address">
+                                Address
+                            </label>
+                            <textarea 
+                                className="shadow appearance-none border rounded w-full ml-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                                id="address" 
+                                placeholder="Address"
+                                onChange={formik.handleChange}
+                                value={formik.values.address}
+                            ></textarea>
+                            {formik.errors.address ?<p className="text-red-500 text-xs italic">Please enter your address!</p> : null }
+                        </div>
                     </div>
 
                     <div className="mb-4">
@@ -166,7 +194,7 @@ function Registration() {
                             onChange={formik.handleChange}
                             value={formik.values.photo}
                         />
-                        {formik.errors.country ?<p className="text-red-500 text-xs italic">Please select your photo!</p> : null }
+                        {formik.errors.photo ?<p className="text-red-500 text-xs italic">Please select your photo!</p> : null }
                     </div>
 
                     <div className="flex flex-col items-center justify-between">
