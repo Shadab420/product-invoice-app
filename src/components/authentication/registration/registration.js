@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 
 
@@ -208,9 +209,9 @@ function Registration() {
                             </a>
                             <p>
                                 Already have an account? 
-                                <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 ml-2" href="#">
+                                <Link to="/login" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 ml-2" href="#">
                                     Login
-                                </a>
+                                </Link>
 
                             </p>
                             
