@@ -15,14 +15,13 @@ import Items from './components/items/Items';
 import PrivateRoute from './hooks/useAuth';
 import Invoice from './components/invoice/Invoice';
 
+
 function App() {
   return (
     <div className="min-h-screen bg-green-500">
       <Router>
 
       <Menubar>
-
-        
 
         <Switch>
             <Route path="/login">
@@ -36,6 +35,9 @@ function App() {
             </PrivateRoute>
             <PrivateRoute path="/items">
               <Items />
+            </PrivateRoute>
+            <PrivateRoute path="/invoice">
+              <Invoice />
             </PrivateRoute>
             <PrivateRoute path="/invoice">
               <Invoice />
