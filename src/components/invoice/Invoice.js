@@ -1,5 +1,8 @@
 import React from 'react';
 import InvoicePDFCreator from '../pdf-generator/InvoicePDFCreator';
+import AddInvoiceModal from './AddInvoiceModal';
+import EditInvoiceModal from './EditInvoiceModal';
+import DeleteInvoiceModal from './DeleteInvoiceModal';
 import './invoice.css';
 
 const fakeData = [
@@ -135,6 +138,7 @@ const Invoice = () => {
 
     return (
         <div className="invoice-table-div">
+            <AddInvoiceModal/>
             <table className="border-collapse w-full max-h-full">
                 <thead>
                     <tr>
@@ -201,9 +205,9 @@ const Invoice = () => {
                                     </td>
                                     <td className="w-full md:w-auto p-3 text-gray-800 text-center border border-b text-center block md:table-cell relative md:static">
                                         <span className="md:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
-                                        {invoice.status === 'In queue' && <a href="#" className="text-blue-400 hover:text-blue-600 underline">Edit</a>}
+                                        {invoice.status === 'In queue' && <EditInvoiceModal invoice = {invoice}/>}
                                         <InvoicePDFCreator invoice = {invoice}/>
-                                        <a href="#" className="text-blue-400 hover:text-blue-600 underline pl-6">Remove</a>
+                                        <DeleteInvoiceModal invoice={invoice}/>
                                     </td>
                                 </tr>
                             )
