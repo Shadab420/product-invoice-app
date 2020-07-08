@@ -14,8 +14,8 @@ const Menubar = ({children}) => {
                 </div>
                 <hr/>
                 <div className="flex flex-col menu">
-                    <Link to="/dashboard"><h1 className="menu-item">Items</h1></Link>
-                    <Link to="/login"><h1 className="menu-item">Invoice</h1></Link>
+                    <Link to="/items"><h1 className="menu-item">Items</h1></Link>
+                    <Link to="/invoice"><h1 className="menu-item">Invoice</h1></Link>
                     <Link to='/'><span className="flex justify-center items-center"><FaSignOutAlt/><h1 className="menu-item">Logout</h1></span></Link>
                 </div>
             </div>

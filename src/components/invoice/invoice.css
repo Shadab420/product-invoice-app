@@ -1,0 +1,19 @@
+.invoice-table-div{
+    max-width: 90%;
+    margin-left: 5%;
+    padding-top: 20px;
+    overflow-x: scroll;
+}
+
+@media screen and (max-width: 768px){
+    .invoice-table-div{
+        width: 50%;
+        margin-left: 25%;
+        padding-top: 20px;
+        overflow-x: hidden;
+    }
+
+    .invoice-table-div table th, .invoice-table-div table td{
+        padding: 30px;
+    }
+}

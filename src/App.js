@@ -11,7 +11,9 @@ import Login from './components/authentication/login/Login';
 import Registration from './components/authentication/registration/registration';
 import Dashboard from './components/dashboard/Dashboard';
 import Menubar from './components/menubar/Menubar';
+import Items from './components/items/Items';
 import PrivateRoute from './hooks/useAuth';
+import Invoice from './components/invoice/Invoice';
 
 function App() {
   return (
@@ -31,6 +33,12 @@ function App() {
             </Route>
             <PrivateRoute path="/dashboard">
               <Dashboard />
+            </PrivateRoute>
+            <PrivateRoute path="/items">
+              <Items />
+            </PrivateRoute>
+            <PrivateRoute path="/invoice">
+              <Invoice />
             </PrivateRoute>
             <Route path="/" exact>
               <Welcome/>
