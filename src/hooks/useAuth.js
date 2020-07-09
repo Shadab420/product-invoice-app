@@ -16,13 +16,13 @@ import {
 
 firebase.initializeApp(firebaseConfig);
 
+export function PrivateRoute({ children}, currentUser=null) {
 
-export function PrivateRoute({ children, ...rest }) {
     return (
       <Route
-        {...rest}
+        
         render={({ location }) =>
-          true ? (
+          currentUser !== null ? (
             children
           ) : (
             <Redirect
@@ -39,7 +39,6 @@ export function PrivateRoute({ children, ...rest }) {
 
 
   const getUser = user => {
-    console.log(user)
   
     return {
         email: user.email

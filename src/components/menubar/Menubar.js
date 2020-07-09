@@ -2,9 +2,11 @@ import React from 'react';
 import './menubar.css';
 import { Link } from 'react-router-dom';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { connect } from 'react-redux';
 
 
-const Menubar = ({children}) => {
+const Menubar = ({children}, props) => {
+    alert(Object.keys(props))
 
     return (
         <div className="min-h-screen">
@@ -14,9 +16,18 @@ const Menubar = ({children}) => {
                 </div>
                 <hr/>
                 <div className="flex flex-col menu">
-                    <Link to="/items"><h1 className="menu-item">Items</h1></Link>
-                    <Link to="/invoice"><h1 className="menu-item">Invoice</h1></Link>
-                    <Link to='/'><span className="flex justify-center items-center"><FaSignOutAlt/><h1 className="menu-item">Logout</h1></span></Link>
+                    { props.user &&<div>
+                        <Link to="/items"><h1 className="menu-item">Items</h1></Link>
+                        <Link to="/invoice"><h1 className="menu-item">Invoice</h1></Link>
+                        <Link to='/'><span className="flex justify-center items-center"><FaSignOutAlt/><h1 className="menu-item">{props.user}</h1></span></Link>
+                        </div>
+                    }
+
+                    { !props.user && <div>
+                        <Link to="/login"><h1 className="menu-item">Login</h1></Link>
+                        <Link to="/registration"><h1 className="menu-item">Registration</h1></Link>
+                        </div>
+                    }
                 </div>
             </div>
             <div className="mx-auto">
@@ -26,4 +37,10 @@ const Menubar = ({children}) => {
     )
 }
 
-export default Menubar;
+const mapStateToProps = (state) => {
+    return{
+      user: state
+    }
+  }
+  
+  export default connect(mapStateToProps, null)(Menubar);

@@ -66,7 +66,7 @@ const Login = (props) => {
     const handleSignOut = () => {
         auth.signOut()
             .then(res => {
-                // window.location.pathname = '/';
+                props.setAuthUser(null);
                 history.push('/');
             })
     }

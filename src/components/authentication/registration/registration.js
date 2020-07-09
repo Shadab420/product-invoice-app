@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import Auth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAuthUser } from '../../../redux/actions/authActions';
 
 const validate = values => {
     const errors = {};
@@ -48,7 +50,7 @@ const validate = values => {
     return errors;
 };
 
-function Registration() {
+function Registration(props) {
 
     const auth = Auth();
     const history = useHistory();
@@ -73,11 +75,11 @@ function Registration() {
 
             auth.signUpWithPassword(email, password)
             .then(res => {
-                // window.location.pathname = '/dashboard';
+                props.setAuthUser(res);
                 history.push("/dashboard");
             })
             .catch(err=>{
-                console.log(email, password)
+                console.log(err)
             })
 
 
@@ -88,14 +90,16 @@ function Registration() {
     const handleSignIn = () => {
         auth.signInWithGoogle()
             .then(res => {
-                window.location.pathname = '/review';
+                props.setAuthUser(res);
+                history.push('/dashboard');
             })
     }
 
     const handleSignOut = () => {
         auth.signOut()
             .then(res => {
-                window.location.pathname = '/';
+                props.setAuthUser(null);
+                history.push('/');
             })
     }
 
@@ -259,4 +263,8 @@ function Registration() {
     );
 }
 
-export default Registration;
+const mapDispatchToProps = {
+    setAuthUser
+}
+
+export default connect( null, mapDispatchToProps)(Registration);

@@ -14,13 +14,14 @@ import Menubar from './components/menubar/Menubar';
 import Items from './components/items/Items';
 import { PrivateRoute } from './hooks/useAuth';
 import Invoice from './components/invoice/Invoice';
+import { connect } from 'react-redux';
 
 
-function App() {
+function App(props) {
   return (
     <div className="min-h-screen bg-green-500">
       <Router>
-
+    { props.user }
       <Menubar>
 
         <Switch>
@@ -30,16 +31,16 @@ function App() {
             <Route path="/registration">
               <Registration />
             </Route>
-            <PrivateRoute path="/dashboard">
+            <PrivateRoute path="/dashboard" currentUser={props.user}>
               <Dashboard />
             </PrivateRoute>
-            <PrivateRoute path="/items">
+            <PrivateRoute path="/items" currentUser={props.user}>
               <Items />
             </PrivateRoute>
-            <PrivateRoute path="/invoice">
+            <PrivateRoute path="/invoice" currentUser={props.user}>
               <Invoice />
             </PrivateRoute>
-            <PrivateRoute path="/invoice">
+            <PrivateRoute path="/invoice" currentUser={props.user}>
               <Invoice />
             </PrivateRoute>
             <Route path="/" exact>
@@ -53,4 +54,10 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return{
+    user: state.email
+  }
+}
+
+export default connect(mapStateToProps, null)(App);
