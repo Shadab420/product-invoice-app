@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { PdfDocument } from "./InvoiceDoc";
+import { FaDownload } from 'react-icons/fa';
 
 export default function InvoicePDFCreator(props) {
 
@@ -10,16 +11,10 @@ export default function InvoicePDFCreator(props) {
             <PDFDownloadLink
                 document={<PdfDocument invoice={props.invoice} />}
                 fileName={`invoice-${props.invoice.invoiceNo}.pdf`}
-                style={{
-                textDecoration: "none",
-                padding: "5px",
-                fontSize: "10px",
-                color: "#4a4a4a",
-                backgroundColor: "#f2f2f2",
-                border: "1px solid #4a4a4a"
-                }}
+                className = "flex items-center bg-indigo-600 active:bg-indigo-600 hover:shadow-lg outline-none focus:outline-none text-white font-bold py-2 px-4 rounded"
             >
-                Download Pdf
+                <FaDownload/>
+                 PDF
                 
             </PDFDownloadLink>
         </div>

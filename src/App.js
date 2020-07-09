@@ -12,7 +12,7 @@ import Registration from './components/authentication/registration/registration'
 import Dashboard from './components/dashboard/Dashboard';
 import Menubar from './components/menubar/Menubar';
 import Items from './components/items/Items';
-import PrivateRoute from './hooks/useAuth';
+import { PrivateRoute } from './hooks/useAuth';
 import Invoice from './components/invoice/Invoice';
 
 

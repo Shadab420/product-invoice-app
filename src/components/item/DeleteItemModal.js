@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaEdit } from 'react-icons/fa';
+import { FaTrashAlt } from 'react-icons/fa';
 
 const DeleteItemModal = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -8,7 +8,7 @@ const DeleteItemModal = (props) => {
     
     return (
       <div>
-        <button onClick={() => setShowModal(true)} className="flex items-center bg-red-600 active:bg-red-600 hover:shadow-lg outline-none focus:outline-none text-white font-bold py-2 px-4 rounded"><FaEdit/>Delete</button>
+        <button onClick={() => setShowModal(true)} className="flex items-center bg-red-600 active:bg-red-600 hover:shadow-lg outline-none focus:outline-none text-white font-bold py-2 px-4 rounded"><FaTrashAlt/>Delete</button>
 
           {showModal ? (
         <>

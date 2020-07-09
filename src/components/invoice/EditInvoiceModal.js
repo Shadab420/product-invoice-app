@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaEdit } from 'react-icons/fa';
+import { FaRegEdit } from 'react-icons/fa';
 import { useFormik } from 'formik';
 
 const validate = values => {
@@ -66,7 +66,7 @@ const EditItemModal = (props) => {
     
   return (
       <div>
-        <button onClick={() => setShowModal(true)} className="flex items-center bg-pink-500 active:bg-pink-600 hover:shadow-lg outline-none focus:outline-none text-white font-bold py-2 px-4 rounded"><FaEdit/>Edit</button>
+        <button onClick={() => setShowModal(true)} className="flex items-center bg-pink-500 active:bg-pink-600 hover:shadow-lg outline-none focus:outline-none text-white font-bold py-2 px-4 rounded"><FaRegEdit/>Edit</button>
 
           {showModal ? (
         <>
