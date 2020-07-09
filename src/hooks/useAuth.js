@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import * as firebase from "firebase/app";
 import 'firebase/auth';
 import firebaseConfig from '../firebase.config';
-import { connect } from 'react-redux';
-import { setAuthUser } from '../redux/actions/authActions';
 
 
 import {
@@ -41,32 +39,48 @@ export function PrivateRoute({ children, ...rest }) {
 
 
   const getUser = user => {
-    const { displayName, email, photoURL } = user;
+    console.log(user)
+  
     return {
-        name: displayName,
-        email,
-        photo: photoURL
+        email: user.email
     }
 }
 
 const Auth = (props) => {
-    // const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
     
+
     const provider = new firebase.auth.GoogleAuthProvider();
+
+
+    const signInWithGoogle = () => {
+        return firebase.auth().signInWithPopup(provider)
+            .then(res => {
+
+                const signedInUser = getUser(res.user);
+                setUser(signedInUser)
+                return signedInUser;
+            })
+            .catch(err=>{
+                console.log(err);
+                setUser(null);
+                return err.message;
+            })
+
+    }
     
     const signUpWithPassword = (email, password) => {
+      
         return firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then(res => {
-  
                   const signedInUser = getUser(res.user);
-                  // setUser(signedInUser);
-                  props.setAuthUser(signedInUser);
+                  setUser(signedInUser);
                   localStorage.setItem("invoice-user", true);
-                  return res.user;
+                  return signedInUser;
               })
               .catch(err=>{
                   console.log(err);
-                  props.setAuthUser(null)
+                  setUser(null)
                   return err.message;
               })
       }
@@ -76,13 +90,13 @@ const Auth = (props) => {
                 .then(res => {
   
                   const signedInUser = getUser(res.user);
-                  props.setAuthUser(signedInUser);
+                  setUser(signedInUser);
                   localStorage.setItem("invoice-user", true);
-                  return res.user;
+                  return signedInUser;
               })
               .catch(err=>{
                   console.log(err);
-                  props.setAuthUser(null)
+                  setUser(null);
                   return err.message;
               })
       }
@@ -90,8 +104,8 @@ const Auth = (props) => {
       const signOut = () => {
           return firebase.auth().signOut().then(function() {
               console.log("signed out success")
-              localStorage.removeItem("hot-onion-user");
-              props.setAuthUser(null);
+              localStorage.removeItem("invoice-user");
+              setUser(null);
             })
             .catch(function(error) {
               console.log(error.message)
@@ -102,7 +116,7 @@ const Auth = (props) => {
           firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                   const currentUser = getUser(user);
-                  props.setAuthUser(currentUser);
+                  setUser(currentUser);
               } else {
                 // No user is signed in.
               }
@@ -110,6 +124,8 @@ const Auth = (props) => {
       },[])
   
       return {
+          user,
+          signInWithGoogle,
           signUpWithPassword,
           signInWithPassword,
           signOut
@@ -118,12 +134,9 @@ const Auth = (props) => {
 
 
   
-
-const mapDispatchToProps = {
-    setAuthUser
-}
   
-export default connect(null, mapDispatchToProps)(Auth);
+
+export default Auth;
   
 
 

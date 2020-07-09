@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+import Auth from '../../../hooks/useAuth';
+import { useHistory } from 'react-router-dom';
 
 const validate = values => {
     const errors = {};
@@ -48,6 +50,9 @@ const validate = values => {
 
 function Registration() {
 
+    const auth = Auth();
+    const history = useHistory();
+
     const formik = useFormik({
         initialValues: {
             firstname: '',
@@ -61,19 +66,48 @@ function Registration() {
         },
         validate,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
+            //firebase signup
+            const email = values.email;
+            const password = values.password;
+
+            auth.signUpWithPassword(email, password)
+            .then(res => {
+                // window.location.pathname = '/dashboard';
+                history.push("/dashboard");
+            })
+            .catch(err=>{
+                console.log(email, password)
+            })
+
+
+            //save users other info to mongodb.
         },
     });
+
+    const handleSignIn = () => {
+        auth.signInWithGoogle()
+            .then(res => {
+                window.location.pathname = '/review';
+            })
+    }
+
+    const handleSignOut = () => {
+        auth.signOut()
+            .then(res => {
+                window.location.pathname = '/';
+            })
+    }
 
     return (
         <>
             <div className="w-full max-w-lg mx-auto py-20">
                 
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" enctype="multipart/form-data" onSubmit={formik.handleSubmit}>
+                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" encType="multipart/form-data" onSubmit={formik.handleSubmit}>
                     <h2 className="text-center font-bold mb-4">Registration</h2>
                     <div className="flex justify-between">
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="firstname">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstname">
                             Firstname
                             </label>
                             <input 
@@ -88,7 +122,7 @@ function Registration() {
                         </div>
                         
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="lastname">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastname">
                             Lastname
                             </label>
                             <input 
@@ -103,7 +137,7 @@ function Registration() {
                         </div>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="email">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                         Email
                         </label>
                         <input 
@@ -119,7 +153,7 @@ function Registration() {
 
                     <div className="flex justify-between">
                         <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                             Password
                             </label>
                             <input 
@@ -133,7 +167,7 @@ function Registration() {
                             {formik.errors.password ?<p className="text-red-500 text-xs italic">Password is required!</p> : null }
                         </div>
                         <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="confirmPassword">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
                                 Confirm Password
                             </label>
                             <input 
@@ -150,7 +184,7 @@ function Registration() {
                     
                     <div className="flex justify-between">
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="country">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="country">
                                 Country
                             </label>
                             <input 
@@ -164,7 +198,7 @@ function Registration() {
                             {formik.errors.country ?<p className="text-red-500 text-xs italic">Please select your country!</p> : null }
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="address">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
                                 Address
                             </label>
                             <textarea 
@@ -179,7 +213,7 @@ function Registration() {
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="photo">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="photo">
                             Photo
                         </label>
                         <input 
@@ -211,6 +245,12 @@ function Registration() {
                             </p>
                             
                         </div>
+
+                        <h1>OR</h1>
+
+                        <button type="button" onClick={handleSignIn} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href="#">
+                                    google sign in
+                        </button>
                         
                     </div>
                 </form>

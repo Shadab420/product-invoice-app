@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import Menubar from '../../menubar/Menubar'
+import { signInWithPassword } from '../../../hooks/useAuth';
+import Auth from '../../../hooks/useAuth';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAuthUser } from '../../../redux/actions/authActions';
+
 
 // A custom validation function. This must return an object
 // which keys are symmetrical to our values/initialValues
@@ -21,10 +26,11 @@ const validate = values => {
     return errors;
 };
 
-function Login() {
+const Login = (props) => {
 
-    // Pass the useFormik() hook initial form values and a submit function that will
-    // be called when the form is submitted
+    const auth = Auth();
+    let history = useHistory();
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -32,9 +38,38 @@ function Login() {
         },
         validate,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
+
+            const email = values.email;
+            const password = values.password;
+
+            auth.signInWithPassword(email, password)
+            .then(res => {
+                props.setAuthUser(res);
+                history.push('/dashboard');
+                // console.log(res.user)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
         },
     });
+
+    const handleSignIn = () => {
+        auth.signInWithGoogle()
+            .then(res => {
+                props.setAuthUser(res);
+                history.push('/dashboard');
+            })
+    }
+
+    const handleSignOut = () => {
+        auth.signOut()
+            .then(res => {
+                // window.location.pathname = '/';
+                history.push('/');
+            })
+    }
 
     return (
         <>
@@ -43,7 +78,7 @@ function Login() {
                 <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={formik.handleSubmit}>
                     <h2 className="text-center font-bold mb-4">Login</h2>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="email">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                         Email
                         </label>
                         <input 
@@ -57,7 +92,7 @@ function Login() {
                         {formik.errors.email ?<p className="text-red-500 text-xs italic">Please enter a valid email!</p> : null }
                     </div>
                     <div className="mb-6">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                         Password
                         </label>
                         <input 
@@ -88,6 +123,12 @@ function Login() {
                             </p>
                             
                         </div>
+
+                        <h1>OR</h1>
+
+                        <button type="button" onClick={handleSignIn} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href="#">
+                                    google sign in
+                        </button>
                         
                     </div>
                 </form>
@@ -96,4 +137,8 @@ function Login() {
     );
 }
 
-export default Login;
+const mapDispatchToProps = {
+    setAuthUser
+}
+
+export default connect( null, mapDispatchToProps)(Login);

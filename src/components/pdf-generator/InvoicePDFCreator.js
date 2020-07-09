@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import Axios from "axios";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import React from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { PdfDocument } from "./InvoiceDoc";
 import { FaDownload } from 'react-icons/fa';
 

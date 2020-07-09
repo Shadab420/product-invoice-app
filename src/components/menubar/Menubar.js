@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './menubar.css';
 import { Link } from 'react-router-dom';
 import { FaSignOutAlt } from 'react-icons/fa';
