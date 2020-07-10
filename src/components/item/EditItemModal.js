@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { useFormik } from 'formik';
+import axios from 'axios';
 
 const validate = values => {
     const errors = {};
@@ -42,7 +43,12 @@ const EditItemModal = (props) => {
         },
         validate,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
+            axios.put('https://localhost:5000/items', {
+              
+                ...values
+              
+            });
         },
     });
     
@@ -78,7 +84,7 @@ const EditItemModal = (props) => {
                   
                     <div className="w-full max-w-lg mx-auto py-20">
                     
-                    <form className="bg-white  rounded px-8 pt-6 pb-8 mb-4" enctype="multipart/form-data" onSubmit={formik.handleSubmit}>
+                    <form className="bg-white  rounded px-8 pt-6 pb-8 mb-4" encType="multipart/form-data" onSubmit={formik.handleSubmit}>
                         <h2 className="text-center font-bold mb-4 text-white-700">Edit item</h2>
                         <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2" for="name">

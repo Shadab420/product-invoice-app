@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 
 const Menubar = ({children}, props) => {
-    alert(Object.keys(props))
+    // alert(Object.keys(props))
 
     return (
         <div className="min-h-screen">

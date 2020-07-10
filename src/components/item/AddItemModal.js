@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FaPlusSquare } from 'react-icons/fa';
 import { useFormik } from 'formik';
+import Axios from 'axios';
+import https from 'https';
 
 const validate = values => {
     const errors = {};
@@ -40,7 +42,55 @@ const AddItemModal = () => {
         },
         validate,
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
+
+            // const instance = Axios.create({
+            //   httpsAgent: new https.Agent({  
+            //     rejectUnauthorized: false
+            //   })
+            // });
+            
+            // instance.post('https://localhost:5000/items', {
+              
+            //     ...values
+              
+            // });
+
+            Axios({
+              url: 'https://localhost:5000/items',
+              method: 'POST',
+              data: {...values},
+              headers: {
+              'Content-Type': 'application/json'
+              },
+              responseType: 'json',
+              httpsAgent: new https.Agent({ rejectUnauthorized: false })
+              })
+              .then(response => {
+                console.log(response)
+              })
+              .catch(error => {
+              })
+
+            // fetch('https://localhost:5000/items', {
+            //   method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            //   mode: 'cors', // no-cors, *cors, same-origin
+            //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            //   credentials: 'same-origin', // include, *same-origin, omit
+            //   headers: {
+            //     'Content-Type': 'application/json'
+            //     // 'Content-Type': 'application/x-www-form-urlencoded',
+            //   },
+            //   redirect: 'follow', // manual, *follow, error
+            //   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            //   body: JSON.stringify({...values}) // body data type must match "Content-Type" header
+            // })
+            // .then(res => res.json)
+            // .then(data => console.log(data))
+            // .catch(err => console.log(err));
+
+
+             
         },
     });
     
@@ -76,10 +126,10 @@ const AddItemModal = () => {
                   
                     <div className="w-full max-w-lg mx-auto py-20">
                     
-                    <form className="bg-white rounded px-8 pt-6 pb-8 mb-4" enctype="multipart/form-data" onSubmit={formik.handleSubmit}>
+                    <form className="bg-white rounded px-8 pt-6 pb-8 mb-4" encType="multipart/form-data" onSubmit={formik.handleSubmit}>
                         <h2 className="text-center font-bold mb-4">Add new item</h2>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="name">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                             Name
                             </label>
                             <input 
@@ -95,7 +145,7 @@ const AddItemModal = () => {
                             
                         
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="description">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
                                 Description
                             </label>
                             <textarea 
@@ -109,7 +159,7 @@ const AddItemModal = () => {
                         </div>
 
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="price">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
                             Price
                             </label>
                             <input 
@@ -124,7 +174,7 @@ const AddItemModal = () => {
                         </div>
 
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" for="image">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
                                 Image
                             </label>
                             <input 

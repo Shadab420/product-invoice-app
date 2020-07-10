@@ -1,139 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import InvoicePDFCreator from '../pdf-generator/InvoicePDFCreator';
 import AddInvoiceModal from './AddInvoiceModal';
 import EditInvoiceModal from './EditInvoiceModal';
 import DeleteInvoiceModal from './DeleteInvoiceModal';
 import './invoice.css';
+import Axios from 'axios';
 
-const fakeData = [
-    {
-        id: 1,
-        invoiceNo: 10+Math.random()*100000,
-        customerName: "Md. Kazi Shadab Anwar",
-        email: "shadab@gmail.com",
-        address: "17/18, Assort Bailey Nest, flat#c2, siddeswary road, dhaka-1217.",
-        country: 'Bangladesh',
-        itemName: 'Mango',
-        price: 80,
-        unit: 'kg',
-        quantity: 5,
-        status: 'Canceled'
-    },
-
-    {
-        id: 2,
-        invoiceNo: 10+Math.random()*100000,
-        customerName: "Shakib Al Hasan",
-        email: "shakib@gmail.com",
-        address: "17/18, Assort Bailey Nest, flat#c2, siddeswary road, dhaka-1217.",
-        country: 'Bangladesh',
-        itemName: 'Banana',
-        price: 65,
-        unit: 'Dozen',
-        quantity: 10,
-        status: 'Delivered'
-    },
-
-    {
-        id: 3,
-        invoiceNo: 1+Math.random()*100000,
-        customerName: "Fahim Shahriar",
-        email: "fahim@gmail.com",
-        address: "17/18, Assort Bailey Nest, flat#c2, siddeswary road, Australia-1217.",
-        country: 'Australia',
-        itemName: 'Dates',
-        price: 80,
-        unit: 'kg',
-        quantity: 3,
-        status: 'In queue'
-    },
-
-    {
-        id: 1,
-        invoiceNo: 10+Math.random()*100000,
-        customerName: "Md. Kazi Shadab Anwar",
-        email: "shadab@gmail.com",
-        address: "17/18, Assort Bailey Nest, flat#c2, siddeswary road, dhaka-1217.",
-        country: 'Bangladesh',
-        itemName: 'Mango',
-        price: 80,
-        unit: 'kg',
-        quantity: 5,
-        status: 'Canceled'
-    },
-
-    {
-        id: 2,
-        invoiceNo: 10+Math.random()*100000,
-        customerName: "Shakib Al Hasan",
-        email: "shakib@gmail.com",
-        address: "17/18, Assort Bailey Nest, flat#c2, siddeswary road, dhaka-1217.",
-        country: 'Bangladesh',
-        itemName: 'Banana',
-        price: 65,
-        unit: 'Dozen',
-        quantity: 10,
-        status: 'Delivered'
-    },
-
-    {
-        id: 3,
-        invoiceNo: 1+Math.random()*100000,
-        customerName: "Fahim Shahriar",
-        email: "fahim@gmail.com",
-        address: "17/18, Assort Bailey Nest, flat#c2, siddeswary road, Australia-1217.",
-        country: 'Australia',
-        itemName: 'Dates',
-        price: 80,
-        unit: 'kg',
-        quantity: 3,
-        status: 'In queue'
-    },
-
-    {
-        id: 1,
-        invoiceNo: 10+Math.random()*100000,
-        customerName: "Md. Kazi Shadab Anwar",
-        email: "shadab@gmail.com",
-        address: "17/18, Assort Bailey Nest, flat#c2, siddeswary road, dhaka-1217.",
-        country: 'Bangladesh',
-        itemName: 'Mango',
-        price: 80,
-        unit: 'kg',
-        quantity: 5,
-        status: 'Canceled'
-    },
-
-    {
-        id: 2,
-        invoiceNo: 10+Math.random()*100000,
-        customerName: "Shakib Al Hasan",
-        email: "shakib@gmail.com",
-        address: "17/18, Assort Bailey Nest, flat#c2, siddeswary road, dhaka-1217.",
-        country: 'Bangladesh',
-        itemName: 'Banana',
-        price: 65,
-        unit: 'Dozen',
-        quantity: 10,
-        status: 'Delivered'
-    },
-
-    {
-        id: 3,
-        invoiceNo: 1+Math.random()*100000,
-        customerName: "Fahim Shahriar",
-        email: "fahim@gmail.com",
-        address: "17/18, Assort Bailey Nest, flat#c2, siddeswary road, Australia-1217.",
-        country: 'Australia',
-        itemName: 'Dates',
-        price: 80,
-        unit: 'kg',
-        quantity: 3,
-        status: 'In queue'
-    }
-]
 
 const Invoice = () => {
+
+    const [invoices, setInvoices] = useState([]);
+
+    useEffect(()=>{
+        Axios.get('http://localhost:5000/invoices')
+            .then(res => setInvoices(res.data));
+    }, [invoices])
+
     let grandTotal = 0;
 
     return (
@@ -157,7 +39,7 @@ const Invoice = () => {
                 </thead>
                 <tbody>
                     {
-                        fakeData.map(invoice =>{
+                        invoices.map(invoice =>{
                             return (
 
                                 <tr className="bg-white md:hover:bg-gray-100 flex md:table-row flex-row md:flex-row flex-wrap md:flex-no-wrap mb-10 md:mb-0">
